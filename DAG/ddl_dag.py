@@ -25,7 +25,7 @@ with DAG(
  
     create_customer_table = BashOperator(
         task_id="create_customer_table",
-        bash_command='bq query --use_legacy_sql=false "CREATE TABLE IF NOT EXISTS composer-demo-2.dls_hackathon_dlk_1.Customer (Customer_ID STRING, Name STRING, Email STRING, Phone STRING, Address STRING, City_ID STRING, Age INT, Gender STRING, Income STRING, Customer_Segment STRING, Valid_flag BOOLEAN, Snapshot_date DATE, Input_feed STRING, PRIMARY KEY (Customer_ID) NOT ENFORCED) PARTITION BY Snapshot_Date;"',
+        bash_command='bq query --use_legacy_sql=false "CREATE TABLE IF NOT EXISTS composer-demo-2.dls_hackathon_dlk_1.Customer (Customer_ID STRING, Name STRING, Email STRING, Phone STRING, Address STRING, City_ID STRING, Age INT, Gender STRING, Income STRING, Customer_Segment STRING, Valid_flag BOOLEAN, Snapshot_date STRING, Input_feed STRING, PRIMARY KEY (Customer_ID) NOT ENFORCED);"',
     )
  
     create_city_table = BashOperator(
@@ -40,7 +40,7 @@ with DAG(
  
     create_transaction_table = BashOperator(
         task_id="create_transaction_table",
-        bash_command='bq query --use_legacy_sql=false "CREATE TABLE IF NOT EXISTS composer-demo-2.dls_hackathon_dlk_1.Transaction (Transaction_ID STRING, Customer_ID STRING, Product_ID STRING, Date DATE, Time DATETIME, Quantity INT, Price NUMERIC, Feedback STRING, Shipping_Method STRING, Payment_Method STRING, Order_Status STRING, Ratings INT, Valid_flag BOOLEAN, Input_feed STRING, PRIMARY KEY (Transaction_ID) NOT ENFORCED, FOREIGN KEY (Customer_ID) REFERENCES dls_hackathon_dlk_1.Customer(Customer_ID) NOT ENFORCED, FOREIGN KEY (Product_ID) REFERENCES dls_hackathon_dlk_1.Product(Product_ID) NOT ENFORCED) PARTITION BY Date;"',
+        bash_command='bq query --use_legacy_sql=false "CREATE TABLE IF NOT EXISTS composer-demo-2.dls_hackathon_dlk_1.Transaction (Transaction_ID STRING, Customer_ID STRING, Product_ID STRING, Date STRING, Time STRING, Quantity INT, Price NUMERIC, Feedback STRING, Shipping_Method STRING, Payment_Method STRING, Order_Status STRING, Ratings NUMERIC, Valid_flag BOOLEAN, Input_feed STRING, PRIMARY KEY (Transaction_ID) NOT ENFORCED, FOREIGN KEY (Customer_ID) REFERENCES dls_hackathon_dlk_1.Customer(Customer_ID) NOT ENFORCED, FOREIGN KEY (Product_ID) REFERENCES dls_hackathon_dlk_1.Product(Product_ID) NOT ENFORCED);"',
     )
 
     # Task to trigger DAG 2 after DAG 1 finishes
